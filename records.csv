@@ -1,0 +1,6 @@
+sanj,74
+
+
+    with open('records.csv', mode='a', newline='') as f:
+        write = csv.writer(f)
+        write.writerow([name, age])
