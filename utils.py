@@ -1,41 +1,39 @@
-d = {}
+import csv
 
 
 def create_record(n=1):
-    # for i in range(n):
-    #     name=input("enter name ")
-    #     age=int(input("enter age "))
-    #     height=input("enter height")
-    #     l = []
-    #     l.append(age)
-    #     l.append(height)
-    #     d[name] = l
+    name = input("enter name: ")
+    age = input("enter age: ")
 
-    while True:
-        name = input("enter name: ")
-        search = d.get(name, False)
-        while True:
-            age = input("enter age: ")
-            if age.isnumeric() and int(age) < 100:
-                break
-            print("please provide an integer value less than 100")
+    with open('records.csv', mode='a', newline='') as f:
+        write = csv.writer(f)
+        write.writerow([name, age])
 
-        if search != False:
-            print("user already exist")
-            replace = input("do you want to replace it? yes/no")
-            if replace.lower().startswith("y"):
-                d[name] = int(age)
-            else:
-                pass
-        else:
-            d[name] = int(age)
-        ques = input("do you want to add more records? enter yes or no: ")
-        if ques.lower().startswith('y'):
-            continue
-        else:
-            break
-
-    return None
+    # while True:
+    #     name = input("enter name: ")
+    #     search = d.get(name, False)
+    #     while True:
+    #         age = input("enter age: ")
+    #         if age.isnumeric() and int(age) < 100:
+    #             break
+    #         print("please provide an integer value less than 100")
+    #
+    #     if search != False:
+    #         print("user already exist")
+    #         replace = input("do you want to replace it? yes/no")
+    #         if replace.lower().startswith("y"):
+    #             d[name] = int(age)
+    #         else:
+    #             pass
+    #     else:
+    #         d[name] = int(age)
+    #     ques = input("do you want to add more records? enter yes or no: ")
+    #     if ques.lower().startswith('y'):
+    #         continue
+    #     else:
+    #         break
+    #
+    # return None
 
 
 def get_record():
