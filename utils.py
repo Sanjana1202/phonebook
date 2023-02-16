@@ -74,10 +74,19 @@ def modify_record():
 
 def delete_record():
     delete_user = input("enter the user you want to be deleted: ")
-    search = d.get(delete_user, False)
-    if delete_user != False:
-        del d[delete_user]
-        return True
-    else:
-        return False
+    final = []
+    result = False
+    with open('records.csv', newline='', mode="r") as csvfile:
+        reader = csv.reader(csvfile)
+        for line in reader:
+            if line[0] == delete_user:
+                result = True
+                pass
+            else:
+                final.append(line)
+    with open('records.csv', mode="w", newline='') as csvfile:
+        write = csv.writer(csvfile)
+        for line in final:
+            write.writerow([line[0], line[1], line[2]])
+    return result
 
