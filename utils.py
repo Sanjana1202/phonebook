@@ -8,6 +8,7 @@ def create_record(n=1):
     with open('records.csv', mode='a', newline='') as f:
         write = csv.writer(f)
         write.writerow([name, age])
+    return True
 
     # while True:
     #     name = input("enter name: ")
@@ -36,14 +37,24 @@ def create_record(n=1):
     # return None
 
 
+
 def get_record():
+    # todo: allow user to search by address, multiple criteria
     name = input("enter the name you want to search: ")
-    search_item = d.get(name, False)
-    if not search_item:
-        print("item does not exist")
-    else:
-        print(search_item)
-    return search_item
+    with open('records.csv', newline='') as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            if row[0] == name:
+                return row
+        return None
+
+    # name = input("enter the name you want to search: ")
+    # search_item = d.get(name, False)
+    # if not search_item:
+    #     print("item does not exist")
+    # else:
+    #     print(search_item)
+    # return search_item
 
 
 def modify_record():
