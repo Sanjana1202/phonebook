@@ -39,6 +39,10 @@ def create_record(n=1):
 
 
 def get_record():
+    """
+
+    :return:
+    """
     # todo: allow user to search by address, multiple criteria
     name = input("enter the name you want to search: ")
     with open('records.csv', newline='') as csvfile:
@@ -64,12 +68,21 @@ def modify_record():
     """
     name = input("enter the name of the person you want to modify: ")
     age = input(" enter the new age of the person: ")
-    modify = d.get(name, False)
-    if modify == False:
-        return False
-    else:
-        d[name] = age
-        return True
+    final = []
+    with open('records.csv', mode='r', newline='') as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            if row[0] == name:
+                row[1] = age
+                final.append(row)
+            else:
+                final.append(row)
+
+    with open('records.csv', 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        for row in final:
+            writer.writerow([row[0], row[1], row[2]])
+    return True
 
 
 def delete_record():
