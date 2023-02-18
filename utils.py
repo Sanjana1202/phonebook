@@ -2,6 +2,7 @@ import csv
 
 
 def create_record(n=1):
+    # todo: allow user to enter only int for age and string for name, add multiple headers like location, photo, country and city.
     name = input("enter name: ")
     age = input("enter age: ")
 
@@ -10,39 +11,7 @@ def create_record(n=1):
         write.writerow([name, age])
     return True
 
-    # while True:
-    #     name = input("enter name: ")
-    #     search = d.get(name, False)
-    #     while True:
-    #         age = input("enter age: ")
-    #         if age.isnumeric() and int(age) < 100:
-    #             break
-    #         print("please provide an integer value less than 100")
-    #
-    #     if search != False:
-    #         print("user already exist")
-    #         replace = input("do you want to replace it? yes/no")
-    #         if replace.lower().startswith("y"):
-    #             d[name] = int(age)
-    #         else:
-    #             pass
-    #     else:
-    #         d[name] = int(age)
-    #     ques = input("do you want to add more records? enter yes or no: ")
-    #     if ques.lower().startswith('y'):
-    #         continue
-    #     else:
-    #         break
-    #
-    # return None
-
-
-
 def get_record():
-    """
-
-    :return:
-    """
     # todo: allow user to search by address, multiple criteria
     name = input("enter the name you want to search: ")
     with open('records.csv', newline='') as csvfile:
@@ -52,20 +21,8 @@ def get_record():
                 return row
         return None
 
-    # name = input("enter the name you want to search: ")
-    # search_item = d.get(name, False)
-    # if not search_item:
-    #     print("item does not exist")
-    # else:
-    #     print(search_item)
-    # return search_item
-
-
 def modify_record():
-    """
-    modifies record in a dictionary
-    :return: True if successful else False
-    """
+    # todo: ability to modify more than one entries at a time.
     name = input("enter the name of the person you want to modify: ")
     age = input(" enter the new age of the person: ")
     final = []
