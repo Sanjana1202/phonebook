@@ -32,6 +32,10 @@ def create_record(n=1):
     country = input("Enter Country: ")
     with open('records.csv', mode='a', newline='') as f:
         write = csv.writer(f)
+        age = age if len(age) > 0 else "null"
+        city = city if len(city) > 0 else "null"
+        country = "null" if len(country) == 0 else country
+        lastname = "null" if len(lastname) == 0 else lastname
         write.writerow([firstname, lastname, phoneno, age, city, country])
     return True
 
