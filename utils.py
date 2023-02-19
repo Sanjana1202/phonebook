@@ -2,14 +2,39 @@ import csv
 
 
 def create_record(n=1):
-    # todo: allow user to enter only int for age and string for name, add multiple headers like location, photo, country and city.
-    name = input("enter name: ")
-    age = input("enter age: ")
-
+    # todo: allow user to enter only int for age and
+    #  add multiple headers like location, photo, country and city.
+    while True:
+        firstname = input("Enter firstname: ")
+        if len(firstname) == 0:
+            print('firstname cannot be empty!!')
+            continue
+        else:
+            break
+    lastname = input("Enter lastname: ")
+    while True:
+        phoneno = input("Enter phoneno: ")
+        if len(phoneno) == 0:
+            print("phone no cannot be empty!!")
+            continue
+        else:
+            break
+    while True:
+        age = input("Enter age: ")
+        if len(age) == 0:
+            break
+        if age.isnumeric() == True and int(age)<100:
+            age = int(age)
+            break
+        else:
+            print("Enter a  valid number which is less than 100")
+    city = input("Enter City: ")
+    country = input("Enter Country: ")
     with open('records.csv', mode='a', newline='') as f:
         write = csv.writer(f)
-        write.writerow([name, age])
+        write.writerow([firstname, lastname, phoneno, age, city, country])
     return True
+
 
 def get_record():
     # todo: allow user to search by address, multiple criteria
