@@ -2,8 +2,6 @@ import csv
 
 
 def create_record(n=1):
-    # todo: allow user to enter only int for age and
-    #  add multiple headers like location, photo, country and city.
     while True:
         firstname = input("Enter firstname: ")
         if len(firstname) == 0:
@@ -40,35 +38,81 @@ def create_record(n=1):
     return True
 
 
+def search_list(lst, item):
+    for i in lst:
+        if i == item:
+            return True
+    return False
+
+
 def get_record():
-    # todo: allow user to search by address, multiple criteria
-    name = input("enter the name you want to search: ")
+    search = input("enter the firstname/city/country/phoneno you want to search: ")
+    final=[]
     with open('records.csv', newline='') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
-            if row[0] == name:
-                return row
-        return None
+            result = search_list(row, search)
+            if result == True:
+                final.append(row)
+        return final
 
-def modify_record():
-    # todo: ability to modify more than one entries at a time.
-    name = input("enter the name of the person you want to modify: ")
-    age = input(" enter the new age of the person: ")
+
+def case_modify(n, search, new):
     final = []
     with open('records.csv', mode='r', newline='') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
-            if row[0] == name:
-                row[1] = age
+            result = search_list(row, search)
+            if result == True:
+                row[n] = new
                 final.append(row)
             else:
                 final.append(row)
-
     with open('records.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         for row in final:
-            writer.writerow([row[0], row[1], row[2]])
+            writer.writerow([row[0], row[1], row[2], row[3], row[4], row[5]])
     return True
+
+def modify_record():
+    while True:
+        search = input("enter the firstname/phoneno/age/lastname/city or country of the person you want to modify: ")
+        if len(search)>0:
+            break
+    while True:
+        print("what do you want to modify? -1,2,3,4 or 5: ")
+        print("1.phone number")
+        print("2.age")
+        print("3.first name")
+        print("4.last name")
+        print("5.city")
+        print("6.country")
+        print("7.exit")
+        answer = input("enter choice: ")
+        if answer == '7':
+            break
+        new = input("enter the modification you want to do or enter to exit:  ")
+        if len(new) == 0:
+            break
+        if answer == '1':
+            case_modify(2, search, new)
+            return True
+        if answer == '2':
+            case_modify(3, search, new)
+            return True
+        if answer == '3':
+            case_modify(0, search, new)
+            return True
+        if answer == '4':
+            case_modify(1, search, new)
+            return True
+        if answer == '5':
+            case_modify(4, search, new)
+            return True
+        if answer == '6':
+            case_modify(5, search, new)
+            return True
+
 
 
 def delete_record():
