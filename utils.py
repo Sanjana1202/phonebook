@@ -57,22 +57,43 @@ def get_record():
         return final
 
 
-def case_modify(n, search, new):
+def read_case_modify(search):
     final = []
+    fields = []
     with open('records.csv', mode='r', newline='') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
             result = search_list(row, search)
             if result == True:
-                row[n] = new
-                final.append(row)
+                fields.append(row)
             else:
                 final.append(row)
+        return fields, final
+
+
+def write_case_modify(result):
     with open('records.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        for row in final:
+        for row in result:
             writer.writerow([row[0], row[1], row[2], row[3], row[4], row[5]])
     return True
+
+
+def _modify(response, new,n):
+    if len(response[0]) > 1:
+        for idx, el in enumerate(response[0]):
+            print(f"{idx + 1}. {el}")
+        option = input("enter the number of record to edit")
+        int_option = int(option)
+        response[0][int_option - 1][n] = new
+        response[0].extend(response[1])
+        write_case_modify(response[0])
+    else:
+        response[0][0][n] = new
+        response[0].extend(response[1])
+        write_case_modify(response[0])
+    return True
+
 
 def modify_record():
     while True:
@@ -95,24 +116,30 @@ def modify_record():
         if len(new) == 0:
             break
         if answer == '1':
-            case_modify(2, search, new)
-            return True
-        if answer == '2':
-            case_modify(3, search, new)
-            return True
-        if answer == '3':
-            case_modify(0, search, new)
-            return True
-        if answer == '4':
-            case_modify(1, search, new)
-            return True
-        if answer == '5':
-            case_modify(4, search, new)
-            return True
-        if answer == '6':
-            case_modify(5, search, new)
+            response = read_case_modify(search)
+            _modify(response, new, 2)
             return True
 
+        if answer == '2':
+            response = read_case_modify(search)
+            _modify(response, new, 3)
+            return True
+        if answer == '3':
+            response = read_case_modify(search)
+            _modify(response, new, 0)
+            return True
+        if answer == '4':
+            response = read_case_modify(search)
+            _modify(response, new, 1)
+            return True
+        if answer == '5':
+            response = read_case_modify(search)
+            _modify(response, new, 4)
+            return True
+        if answer == '6':
+            response = read_case_modify(search)
+            _modify(response, new, 5)
+            return True
 
 
 def delete_record():
