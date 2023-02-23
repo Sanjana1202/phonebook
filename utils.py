@@ -47,7 +47,7 @@ def search_list(lst, item):
 
 def get_record():
     search = input("enter the firstname/city/country/phoneno you want to search: ")
-    final=[]
+    final = []
     with open('records.csv', newline='') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
@@ -79,15 +79,21 @@ def write_case_modify(result):
     return True
 
 
-def _modify(response, new,n):
+def _modify(response, new, n):
     if len(response[0]) > 1:
         for idx, el in enumerate(response[0]):
             print(f"{idx + 1}. {el}")
-        option = input("enter the number of record to edit")
-        int_option = int(option)
-        response[0][int_option - 1][n] = new
-        response[0].extend(response[1])
-        write_case_modify(response[0])
+        while True:
+            option = input("enter the number of record to edit or press enter to exit: ")
+            if len(option) == 0:
+                break
+            if not option.isnumeric() or int(option) > len(response[0]) or int(option) < 0:
+                continue
+            int_option = int(option)
+            response[0][int_option - 1][n] = new
+            response[0].extend(response[1])
+            write_case_modify(response[0])
+            break
     else:
         response[0][0][n] = new
         response[0].extend(response[1])
