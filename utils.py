@@ -47,7 +47,7 @@ def search_list(lst, item):
 
 def get_record():
     search = input("enter the firstname/city/country/phoneno you want to search: ")
-    final = []
+    final=[]
     with open('records.csv', newline='') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
@@ -71,7 +71,7 @@ def read_case_modify(search):
         return fields, final
 
 
-def write_case_modify(result):
+def write_record(result):
     with open('records.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         for row in result:
@@ -92,12 +92,12 @@ def _modify(response, new, n):
             int_option = int(option)
             response[0][int_option - 1][n] = new
             response[0].extend(response[1])
-            write_case_modify(response[0])
+            write_record(response[0])
             break
     else:
         response[0][0][n] = new
         response[0].extend(response[1])
-        write_case_modify(response[0])
+        write_record(response[0])
     return True
 
 
@@ -149,20 +149,25 @@ def modify_record():
 
 
 def delete_record():
-    delete_user = input("enter the user you want to be deleted: ")
+    delete_user = input("enter the name of the user you want to be deleted: ")
     final = []
+    users = []
     result = False
     with open('records.csv', newline='', mode="r") as csvfile:
         reader = csv.reader(csvfile)
         for line in reader:
             if line[0] == delete_user:
-                result = True
-                pass
+                users.append(line)
             else:
                 final.append(line)
-    with open('records.csv', mode="w", newline='') as csvfile:
-        write = csv.writer(csvfile)
-        for line in final:
-            write.writerow([line[0], line[1], line[2]])
-    return result
+        if len(users) > 1:
+            for idx, el in enumerate(users):
+                print(f"{idx + 1}. {el}")
+            option = input("enter the number of record to delete ")
+            for p in range(len(users)):
+                if p != int(option)-1:
+                    final.append(users[p])
+                else:
+                    continue
+    write_record(final)
 
